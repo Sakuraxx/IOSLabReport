@@ -138,10 +138,33 @@ for (key, value) in objNumDict{
 
 //对数组按age升序输出
 var container1 = container.sorted(by: {$0.age < $1.age})
-print(container1)
+for value in container1{
+    print(value.description()+"\n")
+}
+print("age 排序结束")
 
 //对数组按fullName升序输出
+var container2 = container.sorted(by: {$0.fullName < $1.fullName})
+for value in container2{
+    print(value.description()+"\n")
+}
+print("fullName 排序结束")
+
 
 //对数组按gender+age升序输出
+var container3 = container.sorted(by: {
+    if $0.age < $1.age{
+        return true;
+    }else if $0.age==$1.age{
+        return $0.fullName<$1.fullName
+    }else{
+        return false;
+    }
+})
+for value in container3{
+    print(value.description()+"\n")
+}
+print("gender+age 排序结束")
+
 
 
