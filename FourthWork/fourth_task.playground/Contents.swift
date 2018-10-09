@@ -9,33 +9,31 @@
  4.从网上下载一张照片并保存到本地沙盒的Document的某文件中；
  5.从网上查找访问一个JSon接口文件，并采用JSONSerialization和字典对其进行简单解析；
  */
-import UIKit
-func getDate(date : Date,zone : Int = 0)-> String {
-    let dateformat = DateFormatter()    //格式化类
-    dateformat.dateFormat = "yyyy年MM月dd日EEEE aa KK:mm"      //指定格式
-    dateformat.locale = Locale.current          //根据当前环境设置显示时间
-    if zone >= 0 {
-        dateformat.timeZone = TimeZone(abbreviation: "UTC+\(zone):00")
-    } else {
-        dateformat.timeZone = TimeZone(abbreviation: "UTC\(zone):00")
-    }
-    let dateFromString = dateformat.string(from: date)
-    return  dateFromString
-}
+
 
 //(1)
-let now = Date()  //获取当前时间日期
-let Beijing = getDate(date: now, zone: +8)  //获取当前北京的时间
-print("北京: \(Beijing)")
+import UIKit
+import Foundation
+let currentDate = Date()
+var dateFormatter = DateFormatter()
 
-let Tokyo = getDate(date: now, zone: 9)  //获取当前东京的时间
-print("东京: \(Tokyo)")
+dateFormatter.dateFormat = "yyyy年M月dd日E a HH:mm"
+dateFormatter.locale = Locale(identifier:"zh_CN")
+let Beijing = dateFormatter.string(from:currentDate)
+print("北京时间："+Beijing)
 
-let NewYork = getDate(date: now, zone: -5)  //获取当前纽约的时间
-print("纽约: \(Tokyo)")
+dateFormatter.timeZone = TimeZone(abbreviation:"UTC+9:00")
+let Tokyo = dateFormatter.string(from:currentDate)
+Tokyo
+dateFormatter.timeZone = TimeZone(secondsFromGMT:-4*3600)
+let NewYork = dateFormatter.string(from:currentDate)
+print("纽约时间："+NewYork)
 
-let London = getDate(date: now)  //获取当前伦敦的时间
-print("伦敦: \(London)")
+dateFormatter.timeZone = TimeZone(secondsFromGMT:1*3600)
+let London = dateFormatter.string(from:currentDate)
+print("伦敦时间："+London)
+
+
 
 //(2)
 var str = "Swift is a powerful and intuitive programming language for iOS, OS X, tvOS, and watchOS.";
