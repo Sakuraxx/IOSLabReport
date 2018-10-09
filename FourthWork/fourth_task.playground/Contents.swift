@@ -14,26 +14,34 @@
 //(1)
 import UIKit
 import Foundation
+
+func getDate(date: Date, zone: Int = 0) -> String {
+    let formatter = DateFormatter()  //实例化格式化类
+    formatter.dateFormat = "yyyy年MM月dd日EEEE aa KK:mm"  //指定格式化的格式
+    formatter.locale = Locale(identifier: "zh_CN")  //设置当前位置，可以将对应的星期数和12小时制的上下午设置为中文
+    if zone >= 0 { //当传入的为正数时，在东半区
+        formatter.timeZone = TimeZone(abbreviation: "UTC+\(zone):00")
+    } else {  //当传入的为负数时，在西半区
+        formatter.timeZone = TimeZone(abbreviation: "UTC\(zone):00")
+    }
+    
+    let dateString = formatter.string(from: date)  //将传入的日期格式化为字符串
+    return dateString
+}
+
 let currentDate = Date()
-var dateFormatter = DateFormatter()
 
-dateFormatter.dateFormat = "yyyy年M月dd日E a HH:mm"
-dateFormatter.locale = Locale(identifier:"zh_CN")
-let Beijing = dateFormatter.string(from:currentDate)
-print("北京时间："+Beijing)
+let Beijing = getDate(date: currentDate, zone: +8)  //获取当前北京的时间
+print("北京时间: \(Beijing)")  //输出: 北京: 2017年09月19日星期二 下午 10:56
 
-dateFormatter.timeZone = TimeZone(abbreviation:"UTC+9:00")
-let Tokyo = dateFormatter.string(from:currentDate)
-Tokyo
-dateFormatter.timeZone = TimeZone(secondsFromGMT:-4*3600)
-let NewYork = dateFormatter.string(from:currentDate)
-print("纽约时间："+NewYork)
+let Tokyo = getDate(date: currentDate, zone: 9)  //获取当前东京的时间
+print("东京时间: \(Tokyo)")  //输出: 东京: 2017年09月19日星期二 下午 11:56
 
-dateFormatter.timeZone = TimeZone(secondsFromGMT:1*3600)
-let London = dateFormatter.string(from:currentDate)
-print("伦敦时间："+London)
+let NewYork = getDate(date: currentDate, zone: -5)  //获取当前纽约的时间
+print("纽约时间: \(NewYork)")  //输出: 纽约: 2017年09月19日星期二 上午 09:56
 
-
+let London = getDate(date: currentDate)  ////获取当前伦敦的时间
+print("伦敦时间: \(London)")  //输出: 伦敦: 2017年09月19日星期二 下午 02:56
 
 //(2)
 var str = "Swift is a powerful and intuitive programming language for iOS, OS X, tvOS, and watchOS.";
@@ -65,7 +73,6 @@ if var url = defaultDoc.urls(for: .documentDirectory, in: .userDomainMask).first
 let urlWeather = URL(string: "http://www.weather.com.cn/data/sk/101270102.html")!  //成都龙泉驿的天气API路径
 let weatherData = try Data(contentsOf: urlWeather)         //将json数据转换为二进制数据
 let jsonDate = try JSONSerialization.jsonObject(with: weatherData, options: .allowFragments)    //序列化转换为二进制后的json数据
-
 //解析jsonhs数据
 if let dict = jsonDate as? [String: Any]{
     if let weather = dict["weatherinfo"] as? [String: Any]{
@@ -76,12 +83,6 @@ if let dict = jsonDate as? [String: Any]{
         print("城市：\(city)， 温度：\(temp)， 风向：\(wd)，风力：\(ws)")
     }
 }
-
-
-
-
-
-
 
 
 
