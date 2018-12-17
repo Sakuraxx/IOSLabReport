@@ -3,8 +3,20 @@
 //  第五次作业代码
 //
 //  Created by student on 2018/10/24.
-//  Copyright © 2018年 夏靖雯. All rights reserved.
+//  Copyright © 2018年 XJW. All rights reserved.
 //
+/*
+ a)    删除storyboard和控制器代码；
+ b)    新建控制器的子类，并完成相关代码；
+ i.    代码中生成label（outlet）和button；
+ ii.    将label和button加入根view中；
+ iii.    button添加像self（target）发射action（selector）的操作；
+ iv.    实现clicked响应代码（selector）
+ c)    在app delegate中完成window和controller的创建；
+ d)    自己制作一款Icon并添加Icon到程序中；
+ e)    添加图片到程序中，并在程序中显示图片(可以Bundle定位)；
+ f)    将自定制的视图添加到界面并显示；
+ */
 
 import UIKit
 class MyViewController:UIViewController{
